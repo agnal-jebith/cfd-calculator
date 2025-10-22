@@ -1,0 +1,164 @@
+/* src/App.module.css */
+
+.appContainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- 1. Sidebar Styles --- */
+.sidebar {
+  width: 280px;
+  background-color: var(--bg-dark-secondary);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--bg-dark-tertiary);
+  /* On mobile, the height: 100% will come from the media query */
+}
+
+.sidebarTitle {
+  font-size: 1.5rem; /* 24px */
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;            /* <-- CHANGE HERE (was flex-grow: 1) */
+  min-height: 0;      /* <-- ADD THIS LINE */
+  overflow-y: auto; 
+}
+
+.navItem {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navItem:hover {
+  background-color: var(--bg-dark-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* This class makes the item look "selected" */
+.navItem.active {
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+.resetButton {
+  background-color: var(--color-button-reset);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px; /* <-- ADD THIS LINE */
+}
+
+.resetButton:hover {
+  background-color: var(--color-button-reset-hover);
+}
+
+
+/* --- 2. Main Content Styles --- */
+.mainContent {
+  flex-grow: 1; /* Takes up all remaining space */
+  padding: 48px;
+  overflow-y: auto; /* Adds scrollbar if content is too tall */
+}
+
+
+/* --- 3. Mobile Responsive Styles --- */
+
+/* Style for the hamburger menu button */
+.menuButton {
+  display: none; /* Hidden by default on desktop */
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--bg-dark-secondary);
+  border: 1px solid var(--bg-dark-tertiary);
+  color: var(--color-text-primary);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 50; /* Sits on top of main content */
+}
+
+/* Style for the dark overlay */
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 99; /* Sits behind the sidebar but on top of content */
+}
+
+/* This class is added to the <body> to prevent scrolling when menu is open */
+.noScroll {
+  overflow: hidden;
+}
+
+/* This is a Media Query. 
+  These styles will ONLY apply to screens 768px wide or less.
+*/
+@media (max-width: 768px) {
+
+  /* Show the menu button */
+  .menuButton {
+    display: block;
+  }
+  
+  /* Show the overlay when the nav is open */
+  .overlay {
+    display: block;
+  }
+
+  /* Make the sidebar a slide-in panel */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 280px;
+    z-index: 100; /* Sits on top of everything */
+    
+    /* This hides it off-screen to the left */
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* This class is added by React to slide the menu in */
+  .sidebar.mobileNavOpen {
+    transform: translateX(0);
+  }
+
+  /* Adjust main content padding to make room for the menu button */
+  .mainContent {
+    padding: 64px 24px 24px 24px;
+    transition: transform 0.3s ease-in-out; /* Add transition for smooth slide */
+    will-change: transform; /* Optimize animation */
+  }
+
+  /* When the sidebar is open, push the main content to the right */
+  .sidebar.mobileNavOpen ~ .mainContent {
+     transform: translateX(280px); /* Match sidebar width */
+     overflow: hidden; /* Prevent interaction with shifted content */
+     /* Optional: Add slight dimming */
+     /* filter: brightness(0.7); */
+  }
+}

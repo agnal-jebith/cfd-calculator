@@ -1,0 +1,202 @@
+/* src/components/UnitInput.module.css */
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+/* Add to UnitInput.module.css AND CalculatorPage.module.css */
+
+.tooltipContainer /* Renamed from .tooltip-container */ {
+  position: relative;
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center;
+  margin-left: 4px; /* Adjust spacing as needed */
+}
+
+.tooltipIcon /* Renamed from .tooltip-icon */ {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 1rem; /* 16px */
+  height: 1rem; /* 16px */
+  border-radius: 50%;
+  background-color: #4b5563; /* gray-600 */
+  color: #e5e7eb; /* gray-200 */
+  font-size: 0.75rem; /* 12px */
+  font-weight: 700;
+  cursor: help;
+  /* Removed margin-left as it's handled by container/gap */
+}
+
+.tooltipText /* Renamed from .tooltip-text */ {
+  visibility: hidden;
+  width: 160px; /* Adjust as needed */
+  background-color: #1f2937; /* gray-800 */
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 8px; /* Added horizontal padding */
+  position: absolute;
+  z-index: 10; /* Ensure it's above other elements */
+  bottom: 125%; /* Position above the icon */
+  left: 50%;
+  margin-left: -80px; /* Center the tooltip (width / 2) */
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.8rem; /* Adjust text size */
+  font-weight: normal; /* Reset font weight */
+  line-height: 1.4; /* Improve readability */
+  white-space: normal; /* Allow text wrapping */
+}
+
+/* Show the tooltip text when hovering the container or the icon */
+.tooltipContainer:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Adjust labelWrapper to remove gap if using tooltipContainer */
+.labelWrapper {
+    display: flex;
+    align-items: center;
+    /* gap: 4px; */ /* Remove gap if using margin on tooltip-container */
+}
+.resultLabelWrapper {
+    display: flex;
+    align-items: center;
+   /* gap: 4px; */ /* Remove gap if using margin on tooltip-container */
+}
+
+.inputGroup {
+  display: flex;
+  position: relative; /* Needed for potential future addons like icons */
+}
+
+/* Base input styles */
+.input, .select, .staticUnit { /* Added .staticUnit */
+  border: 1px solid var(--border-input);
+  padding: 12px;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: var(--bg-input); /* Base background */
+}
+
+/* Number input specific */
+.input {
+  flex-grow: 1;
+  background-color: var(--bg-input);
+  /* Default: Assume unit exists, remove right border */
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  -webkit-appearance: none; -moz-appearance: textfield; appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* Apply full border radius and right border ONLY when NO unit element follows */
+.inputFullBorder {
+    border-radius: 8px; /* Full rounding */
+    border-right: 1px solid var(--border-input); /* Add back right border */
+}
+
+
+
+/* Select dropdown specific */
+.select {
+  background-color: var(--bg-select);
+  border-left: 1px solid var(--border-input);
+  border-radius: 0 8px 8px 0;
+  color: var(--color-text-secondary);
+  padding-left: 12px;
+  padding-right: 2.5rem; /* Space for arrow */
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  min-width: 80px; /* Keep minimum width */
+}
+
+.select option {
+   background: #1f2937; /* Dark background for dropdown options */
+   color: var(--color-text-primary);
+}
+
+
+/* Style for the static unit span */
+.staticUnit {
+    display: flex; /* Use flex to center content */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    background-color: var(--bg-select); /* Match select background */
+    border-left: 1px solid var(--border-input); /* Keep the separator */
+    border-radius: 0 8px 8px 0; /* Match select rounding */
+    color: var(--color-text-secondary); /* Match select text color */
+    padding-left: 12px; /* Match select padding */
+    padding-right: 12px; /* Match select padding (no arrow space needed) */
+    font-weight: 500; /* Match select font weight */
+    min-width: 50px; /* Give it some base width */
+    text-align: center;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+
+/* Focus styles */
+.input:focus, .select:focus {
+  background-color: var(--bg-input-focus);
+  border-color: var(--border-focus);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3); /* Optional: add a subtle glow */
+  z-index: 1; /* Bring focused element slightly forward */
+  position: relative; /* Needed for z-index */
+}
+
+/* Adjust focus style for input when select is focused */
+.input:focus + .select {
+  border-left-color: var(--border-focus);
+}
+/* Adjust focus style for select when input is focused */
+.select:focus {
+   border-left-color: var(--border-focus);
+}
+
+/* Adjust focus style for input when static unit follows */
+.input:focus + .staticUnit {
+     border-left-color: var(--border-focus); /* Highlight border on focus */
+}
+
+.inputFullBorder:focus {
+    border-right-color: var(--border-focus); /* Ensure right border gets focus color */
+}
+
+.errorMessage {
+  color: var(--color-error); /* Use your defined error color */
+  font-size: 0.75rem; /* Smaller font size */
+  margin-top: 4px; /* Add some space above the message */
+  display: block; /* Ensure it takes its own line */
+}
+
+/* different text colour for optional inputs */
+.optionalInputs {
+  color: #facc15;
+}

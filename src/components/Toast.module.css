@@ -1,0 +1,40 @@
+/* src/components/Toast.module.css */
+
+.toast {
+  position: fixed; /* Position relative to the viewport */
+  bottom: 30px; /* Position from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Fine-tune centering */
+  background-color: #2dd4bf; /* Teal color for success (adjust as needed) */
+  color: #0f172a; /* Dark text */
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000; /* Ensure it's on top */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Animation */
+  animation: fadeInOut 2s ease-in-out forwards; /* Match duration + fade out */
+}
+
+/* You can add error styles too if needed */
+.toast.error {
+    background-color: #f87171; /* Red color for error */
+    color: #fff;
+}
+
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px); /* Start slightly lower */
+  }
+  15%, 85% { /* Stay visible for most of the duration */
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0); /* Fade out in place */
+  }
+}
